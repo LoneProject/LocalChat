@@ -1,0 +1,9 @@
+name: LocalChat
+main: org.lone64.localchat.LocalChat
+author: lone64
+version: 1.0.0
+api-version: '1.19'
+description: 지역채팅 시스템 플러그인
+commands:
+  지역채팅:
+    description: 지역채팅 시스템 명령어
