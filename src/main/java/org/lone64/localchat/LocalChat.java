@@ -5,6 +5,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.lone64.localchat.command.MainCmd;
 import org.lone64.localchat.command.MainTab;
 import org.lone64.localchat.listener.PlayerListener;
+import org.lone64.localchat.util.file.Config;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,19 +14,20 @@ public final class LocalChat extends JavaPlugin {
 
     private static LocalChat instance;
     private static String prefix;
-    private static int chatRadius;
     private static Map<Player, Boolean> playerMap;
 
     @Override
     public void onLoad() {
         instance = this;
         prefix = "[지역채팅]";
-        chatRadius = 20; // 20블럭
         playerMap = new HashMap<>();
     }
 
     @Override
     public void onEnable() {
+        if (!new Config("config.yml").isExists())
+            saveResource("config.yml", false);
+
         this.getCommand("지역채팅").setExecutor(new MainCmd());
         this.getCommand("지역채팅").setTabCompleter(new MainTab());
         this.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
@@ -42,10 +44,6 @@ public final class LocalChat extends JavaPlugin {
 
     public static String getPrefix() {
         return prefix;
-    }
-
-    public static int getChatRadius() {
-        return chatRadius;
     }
 
     public static Map<Player, Boolean> getPlayerMap() {

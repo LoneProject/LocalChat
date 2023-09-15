@@ -8,6 +8,7 @@ import org.bukkit.event.player.PlayerChatEvent;
 import org.lone64.localchat.LocalChat;
 import org.lone64.localchat.util.Util;
 import org.lone64.localchat.util.adventure.AdventureUtil;
+import org.lone64.localchat.util.file.Config;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,7 @@ public class PlayerListener implements Listener {
     public void onChat(PlayerChatEvent event) {
         if (LocalChat.getPlayerMap().get(event.getPlayer()) == null) return;
 
-        int radius = LocalChat.getChatRadius();
+        int radius = new Config("config.yml").getInt("chat-distance-radius");
         List<Player> playerList = new ArrayList<>(List.of(event.getPlayer()));
         for (Entity entity : event.getPlayer().getWorld().getNearbyEntities(event.getPlayer().getLocation(), radius, radius, radius)) {
             if (!(entity instanceof Player)) continue;
